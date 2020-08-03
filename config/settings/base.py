@@ -3,14 +3,14 @@ Base settings to build other settings files upon.
 """
 from pathlib import Path
 
-import environ
+from environ import Env
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # chuckzbot/
 APPS_DIR = ROOT_DIR / "chuckzbot"
-env = environ.Env()
+env = Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR / ".env"))
@@ -18,12 +18,12 @@ if READ_DOT_ENV_FILE:
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = env.bool("DJANGO_DEBUG")
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
 # In Windows, this must be set to your system time zone.
-TIME_ZONE = "UTC+1"
+TIME_ZONE = "UTC"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
@@ -41,9 +41,22 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+# DATABASES = {
+#     "default": env.db("DATABASE_URL")
+# }
+
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres://localhost/chuckzbot")
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": "localhost",
+        "PORT": "",
+    }
 }
+
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS

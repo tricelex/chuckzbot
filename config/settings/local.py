@@ -4,12 +4,10 @@ from .base import env
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
+DEBUG = env.bool("DJANGO_DEBUG")
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env(
-    "DJANGO_SECRET_KEY",
-    default="hhCO9DbPZlmczgtuKH5RKrImzNlVzoFme4BS0hnmwTr809saXD7vhHkeFy9dattC",
-)
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
 
