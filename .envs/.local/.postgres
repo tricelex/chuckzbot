@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=chuckzbot
+POSTGRES_USER=ZKUPHyWEomIepPwdnDVpkdQYvQIaTGFe
+POSTGRES_PASSWORD=hjrNDvxPct1v0akIeJpANx58PeiAC2dCFA75rZt2SlO2BkemP5j8OdulKsdsmUPU
